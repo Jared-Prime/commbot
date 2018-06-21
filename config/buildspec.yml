@@ -1,0 +1,17 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+  pre_build:
+    commands:
+      - dep ensure
+  build:
+    commands:
+      - go build -o bin/twitter lambdas/twitter.go
+artifacts:
+  files:
+      - bin/twitter    
+cache:
+  paths:
+    - bin
