@@ -5,6 +5,8 @@ import (
 	"os"
 )
 
+type LambdaContextKey string
+
 // Envar is a utility function for fetching environment variable from the OS
 func Envar(name string) (string, error) {
 	envar := os.Getenv(name)

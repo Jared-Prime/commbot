@@ -27,13 +27,11 @@ func main() {
 }
 
 func setup(ctx context.Context) (context.Context, error) {
-	type LambdaContextKey string
-
 	_, err := commbot.Envar("LIVE_MODE")
 	if err != nil {
 		// set test node to true
-		ctx = context.WithValue(ctx, LambdaContextKey("TEST_MODE"), true)
-		ctx = context.WithValue(ctx, LambdaContextKey("LIVE_MODE"), false)
+		ctx = context.WithValue(ctx, commbot.LambdaContextKey("TEST_MODE"), true)
+		ctx = context.WithValue(ctx, commbot.LambdaContextKey("LIVE_MODE"), false)
 	}
 
 	for _, name := range enVars {
@@ -43,7 +41,7 @@ func setup(ctx context.Context) (context.Context, error) {
 			return ctx, err
 		}
 
-		ctx = context.WithValue(ctx, LambdaContextKey(name), value)
+		ctx = context.WithValue(ctx, commbot.LambdaContextKey(name), value)
 	}
 
 	return ctx, nil

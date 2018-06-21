@@ -26,26 +26,27 @@ func tweet(accessToken, accessSecret, consumerKey, consumerSecret string) {
 }
 
 // I just want to verify that I can retrieve my account's first tweet https://twitter.com/MyReadingFeed/status/1009480446080634880
-func testTweet(accessToken, accessSecret, consumerKey, consumerSecret string) {
+func testTweet(accessToken, accessSecret, consumerKey, consumerSecret string) string {
 	api := anaconda.NewTwitterApiWithCredentials(accessToken, accessSecret, consumerKey, consumerSecret)
 	user, err := api.GetUsersShow("MyReadingFeed", url.Values{})
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	log.Println(user.Email)
+	return user.Email
 }
 
 func extractEnvironmentVariables(ctx context.Context) (string, string, string, string) {
-	at := ctx.Value("TWITTER_ACCESS_TOKEN")
-	as := ctx.Value("TWITTER_ACCESS_SECRET")
-	ck := ctx.Value("TWITTER_CONSUMER_KEY")
-	cs := ctx.Value("TWITTER_CONSUMER_SECRET")
+	at := ctx.Value(LambdaContextKey("TWITTER_ACCESS_TOKEN"))
+	as := ctx.Value(LambdaContextKey("TWITTER_ACCESS_SECRET"))
+	ck := ctx.Value(LambdaContextKey("TWITTER_CONSUMER_KEY"))
+	cs := ctx.Value(LambdaContextKey("TWITTER_CONSUMER_SECRET"))
 
 	return (at).(string), (as).(string), (ck).(string), (cs).(string)
 }
 
 func isTest(ctx context.Context) bool {
-	test := ctx.Value("TEST_MODE")
+	test := ctx.Value(LambdaContextKey("TEST_MODE"))
+
 	return (test).(bool)
 }
