@@ -3,6 +3,7 @@ package commbot
 import (
 	"context"
 	"fmt"
+	"log"
 	"os"
 )
 
@@ -11,7 +12,7 @@ type EnvarContextKey string
 
 // Setup is a utility function for fetching environment variables from the OS
 func Setup(ctx context.Context, enVars []string) (context.Context, error) {
-	_, err := envar("LIVE_MODE")
+	live, err := envar("LIVE_MODE")
 	if err != nil {
 		// set test node to true
 		ctx = context.WithValue(ctx, EnvarContextKey("TEST_MODE"), true)
@@ -23,6 +24,10 @@ func Setup(ctx context.Context, enVars []string) (context.Context, error) {
 
 		if err != nil {
 			return ctx, err
+		}
+
+		if live == "" {
+			log.Println(value)
 		}
 
 		ctx = context.WithValue(ctx, EnvarContextKey(name), value)
