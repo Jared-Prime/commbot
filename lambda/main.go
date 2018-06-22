@@ -22,6 +22,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	lambda.Start(commbot.TwitterHandler(ctx))
+	f := commbot.TwitterHandler(ctx)
+	f()
+	lambda.Start(f)
 }
