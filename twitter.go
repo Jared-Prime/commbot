@@ -30,12 +30,11 @@ func testTweet(accessToken, accessSecret, consumerKey, consumerSecret string) st
 	anaconda.SetConsumerKey(consumerKey)
 	anaconda.SetConsumerSecret(consumerSecret)
 	api := anaconda.NewTwitterApi(accessToken, accessSecret)
-	log.Println(api)
+
 	user, err := api.GetUsersShow("MyReadingFeed", url.Values{})
 	if err != nil {
 		log.Fatalln(err)
 	}
-	log.Println(user.Name)
 
 	return user.Email
 }
