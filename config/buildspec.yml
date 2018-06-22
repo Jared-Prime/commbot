@@ -5,10 +5,10 @@ phases:
       - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
   pre_build:
     commands:
-      - echo $GOPATH
-      - echo $(pwd)
+      - mkdir -p /go/src/github.com/jared-prime
       - ln -s $(pwd) /go/src/github.com/jared-prime/commbot
       - dep ensure
+      - ls /go/src/github.com/
   build:
     commands:
       - go build -o bin/twitter lambda/main.go
