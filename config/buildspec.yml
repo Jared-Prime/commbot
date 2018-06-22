@@ -8,13 +8,15 @@ phases:
       - mkdir -p /go/src/github.com/jared-prime
       - ln -s $(pwd) /go/src/github.com/jared-prime/commbot
       - dep ensure -vendor-only
-      - ls /go/src/github.com/
   build:
     commands:
       - go build -o bin/twitter lambda/main.go
+  post_build:
+    commands:
+      - zip -r commbot.zip bin
 artifacts:
   files:
-      - bin/twitter    
+      - commbot.zip    
 cache:
   paths:
     - bin
