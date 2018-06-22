@@ -29,7 +29,7 @@ func recentPocketLinks(feed *gofeed.Feed) []string {
 	var items []string
 
 	for _, item := range feed.Items {
-		if time.Since(*item.PublishedParsed) < time.Hour*24 {
+		if time.Since(*item.PublishedParsed) < time.Hour*4 {
 			items = append(items, buildLink(item))
 		}
 	}
