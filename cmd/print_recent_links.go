@@ -8,12 +8,13 @@ import (
 )
 
 func main() {
-	ctx, err := commbot.Setup(context.Background(), []string{"POCKET_RSS_URL"})
+	ctx, err := commbot.Setup(context.Background(), []string{"POCKET_RSS_URL", "BLOG_RSS_URL"})
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	links := commbot.PocketRecentLinks(ctx)
+	links := commbot.BlogRecentLinks(ctx)
+	links = append(links, commbot.PocketRecentLinks(ctx)...)
 
 	log.Println(len(links))
 

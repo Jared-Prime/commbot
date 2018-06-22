@@ -11,11 +11,13 @@ import (
 // TwitterHandler wraps the function for sending out Tweets
 func TwitterHandler(ctx context.Context) func() {
 	return func() {
-		tweetPocketLinks(ctx)
+		messages := BlogRecentLinks(ctx)
+		messages = append(messages, PocketRecentLinks(ctx)...)
+		tweetMessages(ctx, messages)
 	}
 }
 
-func tweetPocketLinks(ctx context.Context) {
+func tweetMessages(ctx context.Context, messages []string) {
 	accessToken, accessSecret, consumerKey, consumerSecret := extractEnvironmentVariables(ctx)
 
 	anaconda.SetConsumerKey(consumerKey)
@@ -23,8 +25,8 @@ func tweetPocketLinks(ctx context.Context) {
 
 	api := anaconda.NewTwitterApi(accessToken, accessSecret)
 
-	for _, link := range PocketRecentLinks(ctx) {
-		_, err := api.PostTweet(link, url.Values{})
+	for _, message := range messages {
+		_, err := api.PostTweet(message, url.Values{})
 		if err != nil {
 			log.Fatal(err)
 		}
