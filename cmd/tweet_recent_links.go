@@ -15,6 +15,7 @@ var (
 		"TWITTER_CONSUMER_KEY",
 		"TWITTER_CONSUMER_SECRET",
 		"POCKET_RSS_URL",
+		"BLOG_RSS_URL",
 	}
 )
 
@@ -23,5 +24,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	lambda.Start(commbot.TwitterHandler(ctx))
 }
