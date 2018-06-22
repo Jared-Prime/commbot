@@ -7,7 +7,7 @@ phases:
     commands:
       - echo $GOPATH
       - echo $(pwd)
-      - ln -s $(pwd) $GOPATH/src/github.com/jared-prime/commbot
+      - ln -s $(pwd) /go/src/github.com/jared-prime/commbot
       - dep ensure
   build:
     commands:
