@@ -10,33 +10,25 @@ import (
 
 // TwitterHandler wraps the function for sending out Tweets
 func TwitterHandler(ctx context.Context) func() {
-	if isTest(ctx) {
-		return func() {
-			testTweet(extractEnvironmentVariables(ctx))
-		}
-	}
-
 	return func() {
-		tweet(extractEnvironmentVariables(ctx))
+		tweetPocketLinks(ctx)
 	}
 }
 
-func tweet(accessToken, accessSecret, consumerKey, consumerSecret string) {
-	anaconda.NewTwitterApiWithCredentials(accessToken, accessSecret, consumerKey, consumerSecret)
-}
+func tweetPocketLinks(ctx context.Context) {
+	accessToken, accessSecret, consumerKey, consumerSecret := extractEnvironmentVariables(ctx)
 
-// I just want to verify that I can retrieve my account's first tweet https://twitter.com/MyReadingFeed/status/1009480446080634880
-func testTweet(accessToken, accessSecret, consumerKey, consumerSecret string) string {
 	anaconda.SetConsumerKey(consumerKey)
 	anaconda.SetConsumerSecret(consumerSecret)
+
 	api := anaconda.NewTwitterApi(accessToken, accessSecret)
 
-	user, err := api.GetUsersShow("MyReadingFeed", url.Values{})
-	if err != nil {
-		log.Fatalln(err)
+	for _, link := range PocketRecentLinks(ctx) {
+		_, err := api.PostTweet(link, url.Values{})
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
-
-	return user.Email
 }
 
 func extractEnvironmentVariables(ctx context.Context) (string, string, string, string) {
@@ -46,10 +38,4 @@ func extractEnvironmentVariables(ctx context.Context) (string, string, string, s
 	cs := ctx.Value(EnvarContextKey("TWITTER_CONSUMER_SECRET"))
 
 	return (at).(string), (as).(string), (ck).(string), (cs).(string)
-}
-
-func isTest(ctx context.Context) bool {
-	test := ctx.Value(EnvarContextKey("TEST_MODE"))
-
-	return (test).(bool)
 }
