@@ -5,6 +5,8 @@ phases:
       - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
   pre_build:
     commands:
+      - echo $GOPATH
+      - echo $(pwd)
       - ln -s $(pwd) $GOPATH/src/github.com/jared-prime/commbot
       - dep ensure
   build:
