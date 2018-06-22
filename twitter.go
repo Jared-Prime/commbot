@@ -37,16 +37,16 @@ func testTweet(accessToken, accessSecret, consumerKey, consumerSecret string) st
 }
 
 func extractEnvironmentVariables(ctx context.Context) (string, string, string, string) {
-	at := ctx.Value(LambdaContextKey("TWITTER_ACCESS_TOKEN"))
-	as := ctx.Value(LambdaContextKey("TWITTER_ACCESS_SECRET"))
-	ck := ctx.Value(LambdaContextKey("TWITTER_CONSUMER_KEY"))
-	cs := ctx.Value(LambdaContextKey("TWITTER_CONSUMER_SECRET"))
+	at := ctx.Value(EnvarContextKey("TWITTER_ACCESS_TOKEN"))
+	as := ctx.Value(EnvarContextKey("TWITTER_ACCESS_SECRET"))
+	ck := ctx.Value(EnvarContextKey("TWITTER_CONSUMER_KEY"))
+	cs := ctx.Value(EnvarContextKey("TWITTER_CONSUMER_SECRET"))
 
 	return (at).(string), (as).(string), (ck).(string), (cs).(string)
 }
 
 func isTest(ctx context.Context) bool {
-	test := ctx.Value(LambdaContextKey("TEST_MODE"))
+	test := ctx.Value(EnvarContextKey("TEST_MODE"))
 
 	return (test).(bool)
 }

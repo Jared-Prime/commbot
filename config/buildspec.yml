@@ -5,10 +5,11 @@ phases:
       - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
   pre_build:
     commands:
+      - ln -s $(pwd) $GOPATH/src/github.com/jared-prime/commbot
       - dep ensure
   build:
     commands:
-      - go build -o bin/twitter lambdas/twitter.go
+      - go build -o bin/twitter lambda/main.go
 artifacts:
   files:
       - bin/twitter    
