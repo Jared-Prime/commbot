@@ -9,7 +9,7 @@ import (
 )
 
 // TwitterHandler wraps the function for sending out Tweets
-func TwitterHandler(ctx context.Context) interface{} {
+func TwitterHandler(ctx context.Context) func() {
 	if isTest(ctx) {
 		return func() {
 			testTweet(extractEnvironmentVariables(ctx))
@@ -27,11 +27,15 @@ func tweet(accessToken, accessSecret, consumerKey, consumerSecret string) {
 
 // I just want to verify that I can retrieve my account's first tweet https://twitter.com/MyReadingFeed/status/1009480446080634880
 func testTweet(accessToken, accessSecret, consumerKey, consumerSecret string) string {
-	api := anaconda.NewTwitterApiWithCredentials(accessToken, accessSecret, consumerKey, consumerSecret)
+	anaconda.SetConsumerKey(consumerKey)
+	anaconda.SetConsumerSecret(consumerSecret)
+	api := anaconda.NewTwitterApi(accessToken, accessSecret)
+
 	user, err := api.GetUsersShow("MyReadingFeed", url.Values{})
 	if err != nil {
 		log.Fatalln(err)
 	}
+	log.Println(user.Name)
 
 	return user.Email
 }
