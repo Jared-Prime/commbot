@@ -7,7 +7,7 @@ phases:
     commands:
       - mkdir -p /go/src/github.com/jared-prime
       - ln -s $(pwd) /go/src/github.com/jared-prime/commbot
-      - dep ensure
+      - dep ensure -vendor-only
       - ls /go/src/github.com/
   build:
     commands:
