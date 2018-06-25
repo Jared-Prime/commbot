@@ -13,8 +13,7 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	links := commbot.BlogRecentLinks(ctx)
-	links = append(links, commbot.PocketRecentLinks(ctx)...)
+	links := commbot.PocketRecentLinks(ctx)
 
 	log.Println(len(links))
 

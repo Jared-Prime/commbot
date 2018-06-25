@@ -11,9 +11,7 @@ import (
 // TwitterHandler wraps the function for sending out Tweets
 func TwitterHandler(ctx context.Context) func() {
 	return func() {
-		messages := BlogRecentLinks(ctx)
-		messages = append(messages, PocketRecentLinks(ctx)...)
-		tweetMessages(ctx, messages)
+		tweetMessages(ctx, PocketRecentLinks(ctx))
 	}
 }
 
