@@ -8,42 +8,17 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	from []string
-)
-
 func init() {
 	rootCmd.AddCommand(tweetCmd)
-
-	tweetCmd.Flags().StringArrayVarP(&from, "from", "i", []string{"STDOUT"}, "sources for tweeting messages")
 }
 
 var tweetCmd = &cobra.Command{
 	Use:   "tweet",
-	Short: "Tweet from the given source.",
-	Long:  "Tweet from the given source.",
+	Short: "Tweet from the Pocket feed.",
+	Long:  "Tweet from the Pocket feed.",
 	Run: func(cmd *cobra.Command, args []string) {
-		for _, handler := range makeHandlers(args) {
-			handler()
-		}
+		pocketHandler()
 	},
-}
-
-func makeHandlers(args []string) []func() {
-	var handlers []func()
-
-	for _, source := range from {
-		switch source {
-		case "pocket":
-			handlers = append(handlers, pocketHandler)
-		case "STDOUT":
-			handlers = append(handlers, twitterHandler(args))
-		default:
-			log.Fatalln("unknown source for tweets: ", from)
-		}
-	}
-
-	return handlers
 }
 
 func twitterHandler(messages []string) func() {
