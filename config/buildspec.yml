@@ -10,7 +10,7 @@ phases:
       - dep ensure -vendor-only
   build:
     commands:
-      - go build -o bin/twitter cmd/tweet_recent_links.go
+      - go build -o bin/entrypoint lambda/entrypoint.go
   post_build:
     commands:
       - zip -r commbot.zip bin
