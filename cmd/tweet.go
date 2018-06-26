@@ -9,14 +9,13 @@ import (
 )
 
 var (
-	accessToken, accessSecret, consumerKey, consumerSecret string
-	from                                                   []string
+	from []string
 )
 
 func init() {
 	rootCmd.AddCommand(tweetCmd)
 
-	tweetCmd.Flags().StringArrayVarP(&from, "from", "f", []string{"STDOUT"}, "sources for tweeting messages")
+	tweetCmd.Flags().StringArrayVarP(&from, "from", "i", []string{"STDOUT"}, "sources for tweeting messages")
 }
 
 var tweetCmd = &cobra.Command{

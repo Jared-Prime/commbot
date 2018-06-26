@@ -2,19 +2,13 @@ package cmd
 
 import (
 	"log"
-	"os"
 
 	"github.com/jared-prime/commbot/pocket"
 	"github.com/spf13/cobra"
 )
 
-var (
-	pocketRSSURL string
-)
-
 func init() {
 	rootCmd.AddCommand(recentCmd)
-	recentCmd.Flags().StringVarP(&pocketRSSURL, "feed", "f", os.Getenv("POCKET_RSS_URL"), "URL for the Pocket RSS feed")
 }
 
 var recentCmd = &cobra.Command{

@@ -12,7 +12,7 @@ var hoursSince string
 func init() {
 	rootCmd.AddCommand(deleteCmd)
 
-	deleteCmd.Flags().StringVarP(&hoursSince, "since", "s", "36h", "max age of Tweet")
+	deleteCmd.Flags().StringVarP(&hoursSince, "since", "x", "36h", "max age of Tweet")
 }
 
 var deleteCmd = &cobra.Command{
