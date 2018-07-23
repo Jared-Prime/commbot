@@ -1,0 +1,3 @@
+.aws/cloudformation/parameters.json
+.aws/lambda
+*.zip
